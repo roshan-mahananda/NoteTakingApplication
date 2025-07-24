@@ -28,14 +28,6 @@ A new feature has been added to enhance your reading experience!
 - ✅ Works on the entire note content
 - ✅ Enhances readability for long notes
 
-### Example:
-If your note contains:
-Java is powerful. I love java.
-
-And you search for: `java`
-
-Then it will be displayed as:
-**Java** is powerful. I love **java**.
 ---
 
 ## 🧰 Technologies Used
