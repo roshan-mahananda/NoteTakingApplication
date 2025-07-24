@@ -10,13 +10,14 @@ public class Main {
         String filePath = scanner.nextLine();
 
         while(true){
+            System.out.println("\n\n");
             System.out.println("1.Create a note.");
             System.out.println("2.Write to the note.");
             System.out.println("3.Read note.");
             System.out.println("4.Delete note.");
             System.out.println("5.List all notes.");
-            System.out.println("6.Exit");
-            System.out.println("Enter your choice : ");
+            System.out.println("6.Exit\n");
+            System.out.print("Enter your choice : ");
             int choice = Integer.parseInt(scanner.nextLine());
 
             switch (choice){
@@ -49,7 +50,7 @@ public class Main {
                 System.out.println("File created successfully.");
             }else System.out.println("File already exist.");
         }catch (Exception e){
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred.\n" + e.getMessage());
         }
     }
     public static void writeNote(String folderPath){
@@ -64,7 +65,7 @@ public class Main {
             writer.close();
             System.out.println("Text written successfully.");
         } catch (Exception e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred.\n"+e.getMessage());
         }
     }
     public static void readFile(String filePath){
@@ -73,15 +74,35 @@ public class Main {
         File file = new File(filePath+"/"+filename);
         try{
             Scanner filescanner = new Scanner(file);
+            StringBuilder content = new StringBuilder();
+
             while(filescanner.hasNextLine()){
                 String line = filescanner.nextLine();
-                System.out.println(line);
+                content.append(line).append("\n");
             }
+
+            System.out.println(content);        //Printing content of a file or note
+
+            System.out.println("\n\n\n");
+            System.out.println("Do you want to search any text ?(Y/N)"); // asking user if user wants to search for any word or not
+            char choice = scanner.nextLine().charAt(0);
+            choice = Character.toLowerCase(choice);
+
+            if(choice == 'y')
+            {
+                System.out.println("Enter the word : ");
+                String word = scanner.nextLine();
+                String highlightedContent = highlighter(content.toString(),word);   //highlighting the word and displaying it to user
+                System.out.println("Highlighted text : \n"+highlightedContent);
+            }
+
             filescanner.close();
+
         }catch (Exception e){
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred.\n" + e.getMessage());
         }
     }
+
     public static void deleteNote(String filePath){
         System.out.println("Enter the filename to delete : ");
         String filename = scanner.nextLine();
@@ -119,5 +140,11 @@ public class Main {
         }catch (Exception e){
             System.out.println("An error occurred.\n"+e.getMessage());
         }
+    }
+    public static String highlighter(String text, String word){
+        if(text.contains(word)){
+            return text.replaceAll("(?i)"+word,"***"+word+"***");
+        }
+        return "";
     }
 }
